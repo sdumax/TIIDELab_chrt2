@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIIDELAB Signup Form</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- main container -->
+    <div class="container">
+        <div class="instructions">
+            <img src="learning.jpg" alt="Learning" srcset="" style="max-width:100%;">
+        </div>
+        <div class="form-container" style="background-color: aquamarine;">
+
+            <h3> Registration Form</h3>
+            <!-- form starts -->
+            <form action="" class="SignupForm" id="SignupForm" onsubmit="processForm()">
+                <input type="text" id="fullName" name="fullName" placeholder="Enter Your Full Name" required>
+                <input type="email" id="email" name="email" placeholder="Enter Your Email Address" required>
+                <input type="text" id="userName" name="userName" placeholder="Enter Your Username" required>
+                <input type="password" id="password" name="password" placeholder="Enter Your Full Password" required>
+                <input type="password" id="cpassword" name="cpassword" placeholder="Enter Your Full Password Again" required>
+
+                <input type="submit" value="Signup" class="submit">
+            </form>
+            <!-- form ends -->
+        </div>
+        <div style="clear: left;"></div>
+    </div>
+
+<!-- scripts start -->
+    <script>
+        document.getElementById('SignupForm').addEventListener("submit", function(event){
+            event.preventDefault();
+        })
+        //form data processing
+            function processForm() {
+                var fullName = document.getElementById('fullName').value;
+                var email = document.getElementById('email').value;
+                var userName = document.getElementById('userName').value;
+                var password = document.getElementById('password').value;
+                var cpassword = document.getElementById('cpassword').value;
+                
+                //password validation
+                if(password!=cpassword){
+                    alert('password mismatch');
+                }else{
+                    var data = {
+                        "fullName": fullName,
+                        "email": email,
+                        "userName": userName,
+                        "newpassword": password,
+                        "isEnabled": true,
+                        "roles":["user"]
+                    };
+
+                    fetch('https://api.openclass.ng/Register',{
+                    method: 'POST',
+                    body:JSON.stringify(data),
+                    headers:{
+                        'Content-Type':'application/json'
+                        }
+                    }).then(function(data){
+                        alert('You have signed up successfully');
+                    });
+                }
+            }
+
+    </script>
+</body>
+</html>
